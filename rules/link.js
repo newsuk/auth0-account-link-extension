@@ -44,15 +44,20 @@ module.exports = ({ extensionURL = '', username = 'Unknown', clientID = '', clie
   function createStrategy() {
     if (shouldLink()) {
       return linkAccounts();
+    } else if (shouldLinkWithoutPrompt()) {
+      return linkAccountsWithoutPrompt();
     } else if (shouldPrompt()) {
       return promptUser();
-
     }
 
     return continueAuth();
 
     function shouldLink() {
       return !!context.request.query.link_account_token;
+    }
+
+    function shouldLinkWithoutPrompt() {
+      return context.connection === "google-oauth2" && user.email.endsWith("@gmail.com") && user.email_verified;
     }
 
     function shouldPrompt() {
@@ -143,13 +148,43 @@ module.exports = ({ extensionURL = '', username = 'Unknown', clientID = '', clie
       });
   }
 
+  function linkAccountsWithoutPrompt() {
+    return searchUsersWithSameEmail().then(function transformUsers(users) {
+      return users.filter(function(u) {
+        return u.user_id !== user.user_id;
+      }).map(function(user) {
+        return user.user_id;
+      });
+    }).then(function redirectToExtension(targetUsers) {
+      if (targetUsers.length > 0) {
+        var linkUri = config.endpoints.userApi+'/'+targetUsers[0]+'/identities';
+        var headers = {
+          Authorization: 'Bearer ' + auth0.accessToken,
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache'
+        };
+
+        return apiCall({
+          method: 'POST',
+          url: linkUri,
+          headers,
+          json: { user_id: user.user_id, provider: context.connection, connection_id: context.connection_id }
+        }).then(function(_) {
+          // TODO: Ask about this
+          console.info(LOG_TAG, 'Successfully linked accounts for user: ', user.email);
+          return _;
+        });
+      }
+    });
+  }
+
   function continueAuth() {
     return Promise.resolve();
   }
 
   function promptUser() {
     return searchUsersWithSameEmail().then(function transformUsers(users) {
-      
+
       return users.filter(function(u) {
         return u.user_id !== user.user_id;
       }).map(function(user) {
