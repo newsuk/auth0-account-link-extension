@@ -18,7 +18,7 @@ module.exports = baseURL => `
             <i class="icon-budicon-460"></i></span>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
               <li><a href="${baseURL}/admin/locale" target="_blank">Manage locales</a></li>
-              <li><a href="https://github.com/auth0-extensions/auth0-account-link-extension/issues/new" target="_blank">Report an issue</a></li>
+              <li><a href="https://github.com/newsuk/auth0-account-link-extension/issues/new" target="_blank">Report an issue</a></li>
               <li class="separator"></li>
               <li><a href="#" id="logout-btn">Logout</a>
               </li>

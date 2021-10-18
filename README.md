@@ -39,7 +39,7 @@ yarn run serve:dev
 
 ## Running puppeteer tests
 
-In order to run the tests you'll have to [start the extension server locally](https://github.com/auth0-extensions/auth0-account-link-extension#running-in-development), fill the `config.test.json` file (normally with the same data as the `config.json` file) and run the Sample Test application located in `sample-app/` (create a dedicated client for this app).
+In order to run the tests you'll have to [start the extension server locally](https://github.com/newsuk/auth0-account-link-extension#running-in-development), fill the `config.test.json` file (normally with the same data as the `config.json` file) and run the Sample Test application located in `sample-app/` (create a dedicated client for this app).
 
 Then, you can run the tests running:
 ```bash

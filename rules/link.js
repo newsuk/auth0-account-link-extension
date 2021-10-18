@@ -34,7 +34,7 @@ module.exports = ({ extensionURL = '', username = 'Unknown', clientID = '', clie
 
   // If the user does not have an e-mail account,
   // just continue the authentication flow.
-  // See auth0-extensions/auth0-account-link-extension#33
+  // See newsuk/auth0-account-link-extension#33
   if (user.email === undefined) {
     return callback(null, user, context);
   }
