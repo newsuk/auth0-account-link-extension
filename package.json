@@ -1,6 +1,6 @@
 {
   "name": "tnl-google-account-link-extension",
-  "version": "2.6.5",
+  "version": "1.0.0",
   "description": "Auth0 Account Link Extension",
   "main": "index.js",
   "engines": {
