@@ -1,4 +1,4 @@
-const generateTemplate = require('./rules/link');
+const script = require('./rules/dist/link').toString();
 
 const RULE_STAGE = 'login_success';
 const RULE_NAME = 'tnl-google-account-link-extension';
@@ -25,7 +25,7 @@ const destroyRule = api => (rules = []) => {
 };
 
 const install = (api, config) => {
-  const rule = { name: RULE_NAME, script: generateTemplate(config), enabled: true };
+  const rule = { name: RULE_NAME, script, enabled: true };
 
   return api.getAll().then(persistRule(api, rule));
 };

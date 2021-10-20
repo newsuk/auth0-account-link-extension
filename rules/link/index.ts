@@ -1,8 +1,8 @@
-import * as request from "request";
+import request from "request";
 import * as queryString from "querystring";
 import * as jwt from "jsonwebtoken";
 
-export function linkSocialProfileEntry(user: Profile, context: Context, callback: RuleCallback) {
+export default function linkSocialProfileEntry(user: Profile, context: Context, callback: RuleCallback) {
     linkSocialProfile(user, context).then(([user, context]) => {
         callback(null, user, context);
     }).catch(error => {
